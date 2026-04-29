@@ -35,15 +35,16 @@ export default function AdminUserTable({ users, onUpdate, onDelete }: Props) {
   return (
     <div className="card">
       <h2 className="page-title">Admin users</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Role</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div className="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
           {users.map((user) => (
             <tr key={user.id}>
               <td>
@@ -93,7 +94,8 @@ export default function AdminUserTable({ users, onUpdate, onDelete }: Props) {
             </tr>
           ))}
         </tbody>
-      </table>
+        </table>
+      </div>
     </div>
   );
 }

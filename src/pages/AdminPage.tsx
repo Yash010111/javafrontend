@@ -103,8 +103,10 @@ export default function AdminPage({ auth, onLogout }: Props) {
       {errorMessage && <ErrorBanner message={errorMessage} />}
       {statusMessage && <ErrorBanner message={statusMessage} variant="success" />}
 
-      <AdminUserTable users={users} onUpdate={handleUpdateUser} onDelete={handleDeleteUser} />
-      <ApiKeyEditor initialApiKey={apiKey} onSave={handleSaveApiKey} />
+      <div className="cards-grid">
+        <AdminUserTable users={users} onUpdate={handleUpdateUser} onDelete={handleDeleteUser} />
+        <ApiKeyEditor initialApiKey={apiKey} onSave={handleSaveApiKey} />
+      </div>
     </div>
   );
 }

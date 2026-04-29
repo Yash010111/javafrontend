@@ -10,7 +10,7 @@ import type {
 } from './types';
 import { clearAuthData, getAuthToken } from './utils/auth';
 
-const API_BASE = 'https://proud-wholeness-production-fc22.up.railway.app';
+const API_BASE = import.meta.env.DEV ? '' : 'https://proud-wholeness-production-fc22.up.railway.app';
 
 export class ApiError extends Error {
   public status: number;

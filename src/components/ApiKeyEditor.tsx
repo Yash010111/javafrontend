@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import type { ApiKeyRequest } from '../types';
 
 interface Props {
@@ -9,6 +9,10 @@ interface Props {
 export default function ApiKeyEditor({ initialApiKey, onSave }: Props) {
   const [apiKey, setApiKey] = useState(initialApiKey);
   const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    setApiKey(initialApiKey);
+  }, [initialApiKey]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

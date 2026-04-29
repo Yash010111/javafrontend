@@ -12,15 +12,16 @@ export default function PortfolioTable({ holdings }: Props) {
   return (
     <div className="card">
       <h2 className="page-title">Portfolio holdings</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Symbol</th>
-            <th>Quantity</th>
-            <th>Average price</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div className="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Symbol</th>
+              <th>Quantity</th>
+              <th>Average price</th>
+            </tr>
+          </thead>
+          <tbody>
           {holdings.map((holding) => (
             <tr key={holding.symbol}>
               <td>{holding.symbol}</td>
@@ -29,7 +30,8 @@ export default function PortfolioTable({ holdings }: Props) {
             </tr>
           ))}
         </tbody>
-      </table>
+        </table>
+      </div>
     </div>
   );
 }

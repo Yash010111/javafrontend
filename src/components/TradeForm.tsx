@@ -1,28 +1,49 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import type { TradeRequest } from '../types';
 
 interface Props {
-  mode: 'buy' | 'sell';
-  onSubmit: (request: TradeRequest) => Promise<void>;
+  onBuy: (request: TradeRequest) => Promise<void>;
+  onSell: (request: TradeRequest) => Promise<void>;
+  autoSymbol?: string;
+  autoPrice?: number;
 }
 
-export default function TradeForm({ mode, onSubmit }: Props) {
+export default function TradeForm({ onBuy, onSell, autoSymbol, autoPrice }: Props) {
+  const [mode, setMode] = useState<'buy' | 'sell'>('buy');
   const [symbol, setSymbol] = useState('');
   const [quantity, setQuantity] = useState('');
   const [price, setPrice] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (autoSymbol && !symbol) {
+      setSymbol(autoSymbol);
+    }
+  }, [autoSymbol, symbol]);
+
+  useEffect(() => {
+    if (autoPrice !== undefined && !price) {
+      setPrice(String(autoPrice.toFixed(2)));
+    }
+  }, [autoPrice, price]);
 
   const buttonText = mode === 'buy' ? 'Buy stock' : 'Sell stock';
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
+    const request = {
+      symbol: symbol.trim().toUpperCase(),
+      quantity: Number(quantity),
+      price: Number(price)
+    };
+
     try {
-      await onSubmit({
-        symbol: symbol.trim().toUpperCase(),
-        quantity: Number(quantity),
-        price: Number(price)
-      });
+      if (mode === 'buy') {
+        await onBuy(request);
+      } else {
+        await onSell(request);
+      }
       setSymbol('');
       setQuantity('');
       setPrice('');
@@ -32,12 +53,28 @@ export default function TradeForm({ mode, onSubmit }: Props) {
   };
 
   return (
-    <div className="card">
+    <div className="card trade-card">
+      <div className="trade-tabs">
+        <button
+          type="button"
+          className={mode === 'buy' ? 'tab active' : 'tab'}
+          onClick={() => setMode('buy')}
+        >
+          Buy
+        </button>
+        <button
+          type="button"
+          className={mode === 'sell' ? 'tab active' : 'tab'}
+          onClick={() => setMode('sell')}
+        >
+          Sell
+        </button>
+      </div>
       <h2 className="page-title">{mode === 'buy' ? 'Buy stock' : 'Sell stock'}</h2>
       <form onSubmit={handleSubmit} className="field-group">
         <label>
           Symbol
-          <input value={symbol} onChange={(event) => setSymbol(event.target.value)} placeholder="TSLA" required />
+          <input value={symbol} onChange={(event) => setSymbol(event.target.value)} placeholder="Enter Symbol" required />
         </label>
         <label>
           Quantity

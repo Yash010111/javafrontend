@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { clearAuthData, loadAuthData, saveAuthData } from './utils/auth';
 import type { AuthResponse } from './types';
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import AdminPage from './pages/AdminPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -36,6 +37,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<LoginPage auth={auth} onAuthSuccess={handleAuthSuccess} />} />
+      <Route path="/register" element={<RegisterPage auth={auth} onAuthSuccess={handleAuthSuccess} />} />
       <Route
         path="/home"
         element={

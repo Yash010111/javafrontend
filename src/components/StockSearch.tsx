@@ -45,15 +45,16 @@ export default function StockSearch({ onSearch, onSymbolSelect }: Props) {
       {results.length > 0 && (
         <div>
           <h3>Results</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Symbol</th>
-                <th>Name</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
+          <div className="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Symbol</th>
+                  <th>Name</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
               {results.map((item) => (
                 <tr key={item.symbol ?? item.name ?? Math.random()}>
                   <td>{item.symbol}</td>
@@ -67,6 +68,7 @@ export default function StockSearch({ onSearch, onSymbolSelect }: Props) {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </div>
